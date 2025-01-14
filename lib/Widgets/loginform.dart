@@ -1,6 +1,9 @@
+import 'package:aid_app/Providers/login_and_signup_provider.dart';
 import 'package:aid_app/Screens/home_screen.dart';
+import 'package:aid_app/Widgets/email_password.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 
 class Loginform extends StatefulWidget {
   const Loginform({super.key});
@@ -9,135 +12,122 @@ class Loginform extends StatefulWidget {
 }
 
 class _LoginformState extends State<Loginform> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  bool _obscurePassword = true;
-  signIn() async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: _emailController.text, password: _passwordController.text);
-      print("User signed in: ${userCredential.user?.email}");
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("You are logged in.")));
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return HomeScreen();
-      }));
-    } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Error signing in: $e")));
-      print("Error signing in: $e");
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
+
+  Future<void> handleSubmit(bool isLogin, BuildContext ctx) async {
+    if (!_formKey.currentState!.validate()) return;
+    if (isLogin) {
+      try {
+        setState(() {
+          _isLoading = true;
+        });
+        UserCredential userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+                email: Provider.of<LoginAndSignupProvider>(ctx, listen: false)
+                    .getEmail(),
+                password:
+                    Provider.of<LoginAndSignupProvider>(ctx, listen: false)
+                        .getPass());
+
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("You are logged in.")));
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return HomeScreen();
+        }));
+      } catch (e) {
+        String error = e.toString().replaceAll(RegExp(r'\[firebase.*?\]'), '');
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Error logging in: " + error)));
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } else {
+      try {
+        setState(() {
+          _isLoading = true;
+        });
+        UserCredential userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: Provider.of<LoginAndSignupProvider>(ctx, listen: false)
+              .getEmail(),
+          password:
+              Provider.of<LoginAndSignupProvider>(ctx, listen: false).getPass(),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Account created: ${userCredential.user?.email}')));
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Error signing up: ' +
+                e
+                    .toString()
+                    .replaceFirst('[firebase_auth/email-already-in-use]', "")
+                    .trim())));
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Container(
-        alignment: Alignment.center,
-        child: Image.asset(
-          'assets/images/9-removebg-preview.png',
-          fit: BoxFit.cover,
-          height: MediaQuery.of(context).size.height * 0.2,
-          width: MediaQuery.of(context).size.width * 0.6,
-        ),
-      ),
-      Text(
-        'Log in to your account',
-        style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
-      ),
-      Form(
-          key: _formKey,
-          child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Email',
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-                SizedBox(height: 8),
-                TextFormField(
-                  controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter email";
-                    }
-                    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-                    if (!emailRegex.hasMatch(value)) {
-                      return 'Enter a valid email address';
-                    }
-                    return null;
-                  },
-                  onFieldSubmitted: (value) {
-                    _formKey.currentState!.validate();
-                  },
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                      labelText: 'Enter your email'),
-                ),
-                SizedBox(height: 16),
-                Text('Password',
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-                SizedBox(height: 8),
-                TextFormField(
-                  controller: _passwordController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter password";
-                    }
-                    if (value.length < 7) {
-                      return 'Password must be at least 7 characters long';
-                    }
-                    return null;
-                  },
-                  onFieldSubmitted: (value) {
-                    _formKey.currentState!.validate();
-                  },
-                  obscureText: _obscurePassword,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                      labelText: 'Enter your password',
-                      suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _obscurePassword = !_obscurePassword;
-                            });
-                          },
-                          icon: Icon(_obscurePassword
-                              ? Icons.visibility_off
-                              : Icons.visibility))),
-                ),
-                SizedBox(height: 22),
-                Align(
-                  alignment: Alignment.center,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        signIn();
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(400, 40),
-                        padding: EdgeInsets.all(8),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16)),
-                        backgroundColor: Colors.blue[900]),
-                    child: Text(
-                      'Log in',
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ),
-                ),
-              ],
+    final provider = Provider.of<LoginAndSignupProvider>(context, listen: true);
+    bool isLogin = provider.isLogin;
+    return Stack(
+      children: [
+        Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Container(
+            alignment: Alignment.center,
+            child: Image.asset(
+              'assets/images/9-removebg-preview.png',
+              fit: BoxFit.cover,
+              height: MediaQuery.of(context).size.height * 0.16,
+              width: MediaQuery.of(context).size.width * 0.6,
             ),
-          )),
-    ]);
+          ),
+          Text(
+            isLogin ? 'Log in to your account' : 'Create a new account',
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w500),
+          ),
+          Form(
+              key: _formKey,
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    EmailandPass(formKey: _formKey),
+                    SizedBox(height: 22),
+                    Align(
+                      alignment: Alignment.center,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          handleSubmit(isLogin, context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                            fixedSize: Size(400, 40),
+                            padding: EdgeInsets.all(8),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16)),
+                            backgroundColor: Colors.blue[900]),
+                        child: Text(
+                          isLogin ? 'Log in' : 'Sign Up',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )),
+        ]),
+        if (_isLoading)
+          Center(
+            child: CircularProgressIndicator(),
+          ),
+      ],
+    );
   }
 }
