@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:aid_app/Providers/login_and_signup_provider.dart';
 import 'package:aid_app/Screens/home_screen.dart';
 import 'package:aid_app/Widgets/email_password.dart';

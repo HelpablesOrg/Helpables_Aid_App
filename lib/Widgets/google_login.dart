@@ -43,9 +43,15 @@ class _Google_LoginState extends State<Google_Login> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(
                 'You dont have an account, please create a new account.')));
-      } else if (!isLogin) {
+      } else if (isLogin) {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('You have successfully logged in')));
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return HomeScreen();
+        }));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('You have successfully create a new account')));
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return HomeScreen();
         }));
