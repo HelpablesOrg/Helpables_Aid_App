@@ -37,7 +37,7 @@ class _Google_LoginState extends State<Google_Login> {
       );
       final UserCredential userCredential =
           await _auth.signInWithCredential(credential);
-      if (userCredential.additionalUserInfo?.isNewUser == true) {
+      if (userCredential.additionalUserInfo?.isNewUser == true && isLogin) {
         await _googleSignIn.disconnect().catchError((e) {});
         await _googleSignIn.signOut();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -45,13 +45,13 @@ class _Google_LoginState extends State<Google_Login> {
                 'You dont have an account, please create a new account.')));
       } else if (isLogin) {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('You have successfully logged in')));
+            SnackBar(content: Text('You have successfully logged in.')));
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return HomeScreen();
         }));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('You have successfully create a new account')));
+            content: Text('You have successfully created a new account')));
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return HomeScreen();
         }));
