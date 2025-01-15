@@ -18,13 +18,9 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       if (await _googleSignOut.isSignedIn()) {
         await _googleSignOut.signOut();
-        print("Google account signed out.");
       }
       await _auth.signOut();
-      print("Firebase user signed out.");
-    } catch (e) {
-      print("Error signing out: $e");
-    }
+    } catch (e) {}
   }
 
   @override

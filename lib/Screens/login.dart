@@ -13,17 +13,20 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Scaffold(
-      body: Column(
-        children: [
-          Container(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.1),
-              height: MediaQuery.of(context).size.height * 0.67,
-              child: Loginform()),
-          SizedBox(
-              height: MediaQuery.of(context).size.height * 0.24,
-              child: Google_Login()),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.08),
+                height: MediaQuery.of(context).size.height * 0.79,
+                child: Loginform()),
+            Container(
+              alignment: Alignment.bottomCenter,
+                height: MediaQuery.of(context).size.height * 0.2,
+                child: Google_Login()),
+          ]
+        ),
       ),
     ));
   }
