@@ -1,3 +1,4 @@
+import 'package:aid_app/Providers/User_provider.dart';
 import 'package:aid_app/Providers/login_and_signup_provider.dart';
 import 'package:aid_app/Screens/forgot_password.dart';
 import 'package:aid_app/Screens/home_screen.dart';
@@ -37,19 +38,31 @@ class _Google_LoginState extends State<Google_Login> {
       );
       final UserCredential userCredential =
           await _auth.signInWithCredential(credential);
+      Provider.of<UserInfoProvider>(ctx, listen: false)
+          .memberCheck(userCredential.user?.email, ctx);
       if (userCredential.additionalUserInfo?.isNewUser == true && isLogin) {
         await _googleSignIn.disconnect().catchError((e) {});
         await _googleSignIn.signOut();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(
                 'You dont have an account, please create a new account.')));
+      } else if (userCredential.additionalUserInfo?.isNewUser != true &&
+          !isLogin) {
+        await _googleSignIn.disconnect().catchError((e) {});
+        await _googleSignIn.signOut();
+        ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+            content: Text('You already have an account please Login.')));
       } else if (isLogin) {
+        Provider.of<UserInfoProvider>(ctx, listen: false)
+            .memberCheck(userCredential.user?.email, ctx);
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('You have successfully logged in.')));
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return HomeScreen();
         }));
       } else {
+        Provider.of<UserInfoProvider>(ctx, listen: false)
+            .memberCheck(userCredential.user?.email, ctx);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('You have successfully created a new account')));
         Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -73,6 +86,7 @@ class _Google_LoginState extends State<Google_Login> {
   Widget build(BuildContext context) {
     final provider = Provider.of<LoginAndSignupProvider>(context, listen: true);
     bool isLogin = provider.isLogin;
+
     return Stack(
       children: [
         Column(

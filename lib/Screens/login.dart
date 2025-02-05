@@ -1,6 +1,8 @@
+import 'package:aid_app/Providers/User_provider.dart';
 import 'package:aid_app/Widgets/google_login.dart';
 import 'package:aid_app/Widgets/loginform.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -11,23 +13,47 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<UserInfoProvider>(context, listen: true);
     return Scaffold(
-        body: Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
+      body: SafeArea(
+        child: Stack(
           children: [
-            Container(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.08),
-                height: MediaQuery.of(context).size.height * 0.79,
-                child: Loginform()),
-            Container(
-              alignment: Alignment.bottomCenter,
-                height: MediaQuery.of(context).size.height * 0.2,
-                child: Google_Login()),
-          ]
+            LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints:
+                        BoxConstraints(minHeight: constraints.maxHeight),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.06),
+                          child: Loginform(),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: Google_Login(),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+            if (provider.isLoading)
+              Container(
+                color: Colors.black26,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    backgroundColor: Colors.black,
+                  ),
+                ),
+              ),
+          ],
         ),
       ),
-    ));
+    );
   }
 }

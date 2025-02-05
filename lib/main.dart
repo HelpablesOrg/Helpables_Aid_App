@@ -1,3 +1,6 @@
+import 'package:aid_app/Providers/User_provider.dart';
+import 'package:aid_app/Providers/add_aid_requestprov.dart';
+import 'package:aid_app/Providers/categories_providers.dart';
 import 'package:aid_app/Providers/login_and_signup_provider.dart';
 import 'package:aid_app/Screens/login.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,6 +15,9 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => LoginAndSignupProvider()),
+        ChangeNotifierProvider(create: (context) => AddAidRequestProvider()),
+        ChangeNotifierProvider(create: (context) => UserInfoProvider()),
+        ChangeNotifierProvider(create: (context) => CategoriesProvider()),
       ],
       child: MyApp(),
     ),
@@ -23,6 +29,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     Provider.of<UserInfoProvider>(context, listen: false).setUserDetails();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: LoginScreen(),
