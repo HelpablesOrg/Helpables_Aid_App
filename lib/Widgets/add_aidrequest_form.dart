@@ -148,7 +148,6 @@ class _FormWidgetState extends State<FormWidget> {
                           Icons.location_on,
                           color: Theme.of(context).colorScheme.primary,
                         )))),
-            SizedBox(height: 8),
           ],
         ),
       ),

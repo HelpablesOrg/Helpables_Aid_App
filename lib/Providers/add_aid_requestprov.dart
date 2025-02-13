@@ -82,8 +82,9 @@ class AddAidRequestProvider with ChangeNotifier {
   }
 
   String validateRequestData() {
-    if (_pickedLocation == null) {
-      return "Please choose a location.";
+    if (_pickedLocation == null ||
+        _pickedLocation!.address == "Address not found") {
+      return "Please choose a valid location.";
     }
     if (_imagesItems.length == 0) {
       return "Please add at least one image.";

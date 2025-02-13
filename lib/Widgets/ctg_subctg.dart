@@ -1,4 +1,3 @@
-import 'package:aid_app/Modal/Category.dart';
 import 'package:aid_app/Modal/subCategory.dart';
 import 'package:aid_app/Providers/add_aid_requestprov.dart';
 import 'package:aid_app/Providers/categories_providers.dart';
@@ -87,10 +86,12 @@ class _CtgSubctgState extends State<CtgSubctg> {
             ),
           ),
         SizedBox(height: 16),
-        GestureDetector(
+        git addGestureDetector(
           onTap: () {
             setState(() {
-              _isSubCategoryExpanded = !_isSubCategoryExpanded;
+              if (_selectedCategory!.isNotEmpty) {
+                _isSubCategoryExpanded = !_isSubCategoryExpanded;
+              }
             });
           },
           child: Container(
