@@ -1,15 +1,19 @@
+import 'package:aid_app/Modal/LocationHelper.dart';
 import 'package:aid_app/Providers/User_provider.dart';
 import 'package:aid_app/Providers/add_aid_requestprov.dart';
 import 'package:aid_app/Providers/categories_providers.dart';
 import 'package:aid_app/Providers/login_and_signup_provider.dart';
 import 'package:aid_app/Screens/login.dart';
+import 'package:aid_app/Screens/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  const String apiKey = String.fromEnvironment("GOOGLE_MAPS_API_KEY", defaultValue: "");
+  await LocationHelper.saveApiKey(apiKey);
   await Firebase.initializeApp();
   runApp(
     MultiProvider(
@@ -26,13 +30,40 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-     Provider.of<UserInfoProvider>(context, listen: false).setUserDetails();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: FutureBuilder(
+          future: Provider.of<UserInfoProvider>(context, listen: false)
+              .setUserDetails(),
+          builder: (context, userDetailsSnapshot) {
+            if (userDetailsSnapshot.connectionState ==
+                ConnectionState.waiting) {
+              return Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
+            }
+            return StreamBuilder<User?>(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Scaffold(
+                    body: Center(child: CircularProgressIndicator()),
+                  );
+                }
+
+                if (snapshot.hasData) {
+                  final user = snapshot.data;
+                  Provider.of<UserInfoProvider>(context, listen: false)
+                      .memberCheck(user?.email.toString(), context);
+                  return HomeScreen();
+                }
+
+                return LoginScreen();
+              },
+            );
+          }),
     );
   }
 }

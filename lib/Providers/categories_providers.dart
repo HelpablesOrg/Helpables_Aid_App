@@ -22,32 +22,6 @@ class CategoriesProvider with ChangeNotifier {
     _items = [];
   }
 
-  void fetchChosenSubCategories(final subCategories, String id) {
-    _items = [];
-    try {
-      for (var element in _categoryitems) {
-        if (element.id == id) {
-          element.subCategory.forEach((data) {
-            _items.add(SubCategory(title: data, qty: 0));
-          });
-        }
-      }
-      for (int i = 0; i < subCategories.length; i++) {
-        subCategories[i].forEach((key, value) {
-          for (int j = 0; j < _items.length; j++) {
-            if (_items[j].title == key) {
-              _items[j].qty = value;
-            }
-          }
-        });
-      }
-      notifyListeners();
-    } catch (error) {
-      rethrow;
-    }
-    notifyListeners();
-  }
-
   Future<void> fetchSubCategories(String id) async {
     try {
       List<SubCategory> loadedCategories = [];
@@ -59,7 +33,6 @@ class CategoriesProvider with ChangeNotifier {
         }
       }
       _items = loadedCategories;
-     
 
       notifyListeners();
     } catch (error) {

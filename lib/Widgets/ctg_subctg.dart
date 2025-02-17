@@ -86,10 +86,10 @@ class _CtgSubctgState extends State<CtgSubctg> {
             ),
           ),
         SizedBox(height: 16),
-        git addGestureDetector(
+        GestureDetector(
           onTap: () {
             setState(() {
-              if (_selectedCategory!.isNotEmpty) {
+              if (_selectedCategory != null && _selectedCategory!.isNotEmpty) {
                 _isSubCategoryExpanded = !_isSubCategoryExpanded;
               }
             });

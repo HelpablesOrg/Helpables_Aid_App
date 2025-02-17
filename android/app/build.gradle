@@ -10,6 +10,7 @@ android {
     namespace = "com.example.aid_app"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
+    defaultConfig { buildConfigField "String", "GOOGLE_MAPS_API_KEY", "\"${localProperties.getProperty('google.maps.apiKey')}\"" }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -50,4 +51,8 @@ dependencies {
   implementation platform('com.google.firebase:firebase-bom:33.7.0')
   implementation 'com.google.firebase:firebase-analytics'
   implementation 'com.google.android.gms:play-services-maps:18.0.2'
+}
+
+buildTypes.each {
+    it.buildConfigField "String", "GOOGLE_MAPS_API_KEY", "\"${localProperties.getProperty('google.maps.apiKey')}\""
 }
