@@ -1,9 +1,7 @@
-// ignore_for_file: unused_local_variable
-
-import 'package:aid_app/Providers/User_provider.dart';
-import 'package:aid_app/Providers/login_and_signup_provider.dart';
-import 'package:aid_app/Screens/home_screen.dart';
-import 'package:aid_app/Widgets/email_password.dart';
+import '../Providers/User_provider.dart';
+import '../Providers/login_and_signup_provider.dart';
+import '../Screens/home_screen.dart';
+import '../Widgets/email_password.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';

@@ -1,4 +1,4 @@
-import 'package:aid_app/Modal/subCategory.dart';
+import '../Modal/subCategory.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 

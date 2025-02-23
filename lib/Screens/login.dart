@@ -1,6 +1,6 @@
-import 'package:aid_app/Providers/User_provider.dart';
-import 'package:aid_app/Widgets/google_login.dart';
-import 'package:aid_app/Widgets/loginform.dart';
+import '../Providers/User_provider.dart';
+import '../Widgets/google_login.dart';
+import '../Widgets/loginform.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

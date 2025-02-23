@@ -1,4 +1,4 @@
-import 'package:aid_app/Modal/PlaceLocation.dart';
+import '../Modal/PlaceLocation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 

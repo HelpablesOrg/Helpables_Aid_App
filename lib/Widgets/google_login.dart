@@ -1,7 +1,7 @@
-import 'package:aid_app/Providers/User_provider.dart';
-import 'package:aid_app/Providers/login_and_signup_provider.dart';
-import 'package:aid_app/Screens/forgot_password.dart';
-import 'package:aid_app/Screens/home_screen.dart';
+import '../Providers/User_provider.dart';
+import '../Providers/login_and_signup_provider.dart';
+import '../Screens/forgot_password.dart';
+import '../Screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';

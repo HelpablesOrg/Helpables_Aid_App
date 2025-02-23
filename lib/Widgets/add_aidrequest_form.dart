@@ -1,6 +1,6 @@
-import 'package:aid_app/Modal/PlaceLocation.dart';
-import 'package:aid_app/Providers/add_aid_requestprov.dart';
-import 'package:aid_app/Screens/Maps_screen.dart';
+import '../Modal/PlaceLocation.dart';
+import '../Providers/add_aid_requestprov.dart';
+import '../Screens/Maps_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';

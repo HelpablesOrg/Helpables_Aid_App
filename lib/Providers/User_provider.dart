@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:aid_app/Providers/categories_providers.dart';
+import '../Providers/categories_providers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +15,7 @@ class UserInfoProvider with ChangeNotifier {
 
   checkLoading(bool check) {
     isLoading = check;
+    notifyListeners();
   }
 
   memberCheck(String? email, BuildContext context) {
@@ -37,7 +38,6 @@ class UserInfoProvider with ChangeNotifier {
       _members.add(user['Email']);
     });
     notifyListeners();
-    // Then subscribe to real-time updates (skip the first snapshot to avoid duplicate work)
     _userSubscription = FirebaseFirestore.instance
         .collection('Users')
         .snapshots()

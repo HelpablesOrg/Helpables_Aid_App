@@ -1,10 +1,10 @@
-import 'package:aid_app/Modal/LocationHelper.dart';
-import 'package:aid_app/Providers/User_provider.dart';
-import 'package:aid_app/Providers/add_aid_requestprov.dart';
-import 'package:aid_app/Providers/categories_providers.dart';
-import 'package:aid_app/Providers/login_and_signup_provider.dart';
-import 'package:aid_app/Screens/login.dart';
-import 'package:aid_app/Screens/home_screen.dart';
+import '../Modal/LocationHelper.dart';
+import '../Providers/User_provider.dart';
+import '../Providers/add_aid_requestprov.dart';
+import '../Providers/categories_providers.dart';
+import '../Providers/login_and_signup_provider.dart';
+import '../Screens/login.dart';
+import '../Screens/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

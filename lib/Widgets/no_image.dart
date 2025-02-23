@@ -1,4 +1,4 @@
-import 'package:aid_app/Widgets/image_drawer.dart';
+import '../Widgets/image_drawer.dart';
 import 'package:flutter/material.dart';
 
 class NoImage extends StatelessWidget {

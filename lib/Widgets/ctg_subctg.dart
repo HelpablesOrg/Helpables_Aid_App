@@ -1,6 +1,6 @@
-import 'package:aid_app/Modal/subCategory.dart';
-import 'package:aid_app/Providers/add_aid_requestprov.dart';
-import 'package:aid_app/Providers/categories_providers.dart';
+import '../Modal/subCategory.dart';
+import '../Providers/add_aid_requestprov.dart';
+import '../Providers/categories_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

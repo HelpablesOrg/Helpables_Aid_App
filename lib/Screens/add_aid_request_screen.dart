@@ -1,9 +1,9 @@
-import 'package:aid_app/Providers/add_aid_requestprov.dart';
-import 'package:aid_app/Providers/categories_providers.dart';
-import 'package:aid_app/Screens/home_screen.dart';
-import 'package:aid_app/Widgets/add_aidrequest_form.dart';
-import 'package:aid_app/Widgets/carousel_slider.dart';
-import 'package:aid_app/Widgets/ctg_subctg.dart';
+import '../Providers/add_aid_requestprov.dart';
+import '../Providers/categories_providers.dart';
+import '../Screens/home_screen.dart';
+import '../Widgets/add_aidrequest_form.dart';
+import '../Widgets/carousel_slider.dart';
+import '../Widgets/ctg_subctg.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

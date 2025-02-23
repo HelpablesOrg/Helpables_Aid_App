@@ -1,6 +1,6 @@
-import 'package:aid_app/Providers/User_provider.dart';
-import 'package:aid_app/Screens/add_aid_request_screen.dart';
-import 'package:aid_app/Screens/login.dart';
+import '../Providers/User_provider.dart';
+import '../Screens/add_aid_request_screen.dart';
+import '../Screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';

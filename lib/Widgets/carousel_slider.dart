@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'package:aid_app/Widgets/image_drawer.dart';
-import 'package:aid_app/Widgets/no_image.dart';
+import '../Widgets/image_drawer.dart';
+import '../Widgets/no_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:aid_app/Providers/add_aid_requestprov.dart';
+import '../Providers/add_aid_requestprov.dart';
 
 // ignore: must_be_immutable
 class ShowCarouselSlider extends StatefulWidget {

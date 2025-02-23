@@ -1,5 +1,5 @@
-import 'package:aid_app/Modal/PlaceLocation.dart';
-import 'package:aid_app/Modal/subCategory.dart';
+import '../Modal/PlaceLocation.dart';
+import '../Modal/subCategory.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+
 
 class AddAidRequestProvider with ChangeNotifier {
   static List<File> _imagesItems = [];

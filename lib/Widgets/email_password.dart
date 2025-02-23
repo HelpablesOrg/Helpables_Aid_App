@@ -1,4 +1,4 @@
-import 'package:aid_app/Providers/login_and_signup_provider.dart';
+import '../Providers/login_and_signup_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
