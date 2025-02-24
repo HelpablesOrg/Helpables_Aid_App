@@ -20,7 +20,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     try {
       await FirebaseAuth.instance
           .sendPasswordResetEmail(email: _emailController.text.trim());
-    } on FirebaseAuthException catch (e) {}
+    } on FirebaseAuthException {}
   }
 
   @override

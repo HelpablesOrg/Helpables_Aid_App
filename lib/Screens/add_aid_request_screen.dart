@@ -20,7 +20,7 @@ class _AddAidRequestScreenState extends State<AddAidRequestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> _categories =
+    final List<String> categories =
         Provider.of<CategoriesProvider>(context, listen: true).getCategory();
     final provider = Provider.of<AddAidRequestProvider>(context, listen: false);
     void callSnackbar(String title) {
@@ -52,7 +52,7 @@ class _AddAidRequestScreenState extends State<AddAidRequestScreen> {
                       top: 10, bottom: 10, left: 16, right: 16),
                   child: Align(
                       alignment: Alignment.bottomLeft,
-                      child: CtgSubctg(categories: _categories)),
+                      child: CtgSubctg(categories: categories)),
                 ),
                 SizedBox(height: 16),
                 SizedBox(

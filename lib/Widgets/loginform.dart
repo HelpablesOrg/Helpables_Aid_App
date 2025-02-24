@@ -13,7 +13,7 @@ class Loginform extends StatefulWidget {
 }
 
 class _LoginformState extends State<Loginform> {
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Future<void> handleSubmit(bool isLogin, BuildContext ctx) async {
     if (!_formKey.currentState!.validate()) return;

@@ -70,12 +70,12 @@ class _FormWidgetState extends State<FormWidget> {
       });
       String address = await getAddressFromLatLng(
           selectedLocation.latitude, selectedLocation.longitude);
-      PlaceLocation _location = PlaceLocation(
+      PlaceLocation location = PlaceLocation(
           latitude: selectedLocation.latitude,
           longitude: selectedLocation.longitude,
           address: address);
-      _locationController.text = _location.address;
-      provider.getLocation(_location);
+      _locationController.text = location.address;
+      provider.getLocation(location);
     }
 
     return Form(

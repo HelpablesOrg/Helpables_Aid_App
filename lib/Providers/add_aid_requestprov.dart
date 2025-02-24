@@ -87,13 +87,13 @@ class AddAidRequestProvider with ChangeNotifier {
         _pickedLocation!.address == "Address not found") {
       return "Please choose a valid location.";
     }
-    if (_imagesItems.length == 0) {
+    if (_imagesItems.isEmpty) {
       return "Please add at least one image.";
     }
     if (_catId == '') {
       return "Please select a category";
     }
-    if (subCategories.length == 0) {
+    if (subCategories.isEmpty) {
       return "Please add amount to at least one Sub-Category.";
     }
     return "true";
@@ -126,7 +126,7 @@ class AddAidRequestProvider with ChangeNotifier {
       var imgUrl = await ref.getDownloadURL();
       imgUrls.add(imgUrl);
     }
-    imgUrls.length > 0
+    imgUrls.isNotEmpty
         ? FirebaseFirestore.instance.collection('AidRequestList').add({
             'Category Title': _catId,
             'title': _title,

@@ -27,9 +27,9 @@ class CategoriesProvider with ChangeNotifier {
       List<SubCategory> loadedCategories = [];
       for (var element in _categoryitems) {
         if (element.title == id) {
-          element.subCategory.forEach((item) {
+          for (var item in element.subCategory) {
             loadedCategories.add(SubCategory(title: item, qty: 0));
-          });
+          }
         }
       }
       _items = loadedCategories;
@@ -53,11 +53,9 @@ class CategoriesProvider with ChangeNotifier {
 
     for (var element in _categoryitems) {
       if (element.title == id) {
-        element.subCategory.forEach(
-          (element) {
+        for (var element in element.subCategory) {
             subcategories.add(element);
-          },
-        );
+          }
       }
     }
 
@@ -81,13 +79,13 @@ class CategoriesProvider with ChangeNotifier {
           .snapshots()
           .listen((data) {
         List<Category> loadedCategories = [];
-        data.docs.forEach((element) {
+        for (var element in data.docs) {
           loadedCategories.add(Category(
             id: element['id'],
             title: element['Title'],
             subCategory: element['SubCategories'],
           ));
-        });
+        }
         _categoryitems = loadedCategories;
       });
 

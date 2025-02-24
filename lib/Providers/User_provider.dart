@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 class UserInfoProvider with ChangeNotifier {
   bool isLoading = false;
-  List<String> _members = [];
+  final List<String> _members = [];
   bool isMemeber = false;
   StreamSubscription? _userSubscription;
   List<String> getmembers() {
@@ -34,9 +34,9 @@ class UserInfoProvider with ChangeNotifier {
     QuerySnapshot snapshot =
         await FirebaseFirestore.instance.collection('Users').get();
     _members.clear();
-    snapshot.docs.forEach((user) {
+    for (var user in snapshot.docs) {
       _members.add(user['Email']);
-    });
+    }
     notifyListeners();
     _userSubscription = FirebaseFirestore.instance
         .collection('Users')
@@ -44,9 +44,9 @@ class UserInfoProvider with ChangeNotifier {
         .skip(1)
         .listen((event) {
       _members.clear();
-      event.docs.forEach((user) {
+      for (var user in event.docs) {
         _members.add(user['Email']);
-      });
+      }
       notifyListeners();
     });
   }
