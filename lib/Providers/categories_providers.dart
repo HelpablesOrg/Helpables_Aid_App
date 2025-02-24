@@ -85,7 +85,6 @@ class CategoriesProvider with ChangeNotifier {
           loadedCategories.add(Category(
             id: element['id'],
             title: element['Title'],
-            icon: IconData(element['icon'], fontFamily: 'MaterialIcons'),
             subCategory: element['SubCategories'],
           ));
         });
