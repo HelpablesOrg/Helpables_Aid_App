@@ -1,4 +1,4 @@
-package com.example.aid_app
+package com.helpables.app
 
 import io.flutter.embedding.android.FlutterActivity
 

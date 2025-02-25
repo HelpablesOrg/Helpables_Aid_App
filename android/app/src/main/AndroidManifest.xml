@@ -1,9 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.helpables.app">
+<uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="Helpables"
+        android:label="Helpables Aid"
         android:name="${applicationName}"
         android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/ic_launcher">
+
       <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyDUdvTcrvbKWmBYBub0rRsZkhSw_SB07Xk"/>
         <activity
