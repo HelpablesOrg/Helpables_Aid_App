@@ -1,3 +1,5 @@
+import 'package:helpables/Providers/aidrequests_provider.dart';
+
 import '../Providers/User_provider.dart';
 import '../Providers/login_and_signup_provider.dart';
 import '../Screens/home_screen.dart';
@@ -36,6 +38,7 @@ class _LoginformState extends State<Loginform> {
 
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("You are logged in.")));
+        Provider.of<AidRequestsProvider>(ctx, listen: false).fetchAidRequests();
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return HomeScreen();
         }));
