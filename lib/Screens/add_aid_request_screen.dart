@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 
 class AddAidRequestScreen extends StatefulWidget {
   const AddAidRequestScreen({super.key});
-
   @override
   State<AddAidRequestScreen> createState() => _AddAidRequestScreenState();
 }
@@ -17,7 +16,6 @@ class AddAidRequestScreen extends StatefulWidget {
 class _AddAidRequestScreenState extends State<AddAidRequestScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
-
   @override
   Widget build(BuildContext context) {
     final List<String> categories =
@@ -66,30 +64,35 @@ class _AddAidRequestScreenState extends State<AddAidRequestScreen> {
                         backgroundColor:
                             (const Color.fromARGB(255, 7, 77, 134)),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           String check = provider.validateRequestData();
-                          check == "true"
-                              ? {
-                                  setState(() {
-                                    _isLoading = true;
-                                  }),
-                                  provider.addAidRequest().then(
-                                    (value) {
-                                      callSnackbar(
-                                          "Form submitted successfully.");
-                                      setState(() {
-                                        _isLoading = false;
-                                      });
-                                      provider.cleardata();
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) {
-                                        return HomeScreen();
-                                      }));
-                                    },
-                                  ),
-                                }
-                              : callSnackbar(check);
+                          if (check == "true") {
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            try {
+                              await provider.addAidRequest();
+                              callSnackbar("Form submitted successfully.");
+                              provider.cleardata();
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return HomeScreen();
+                              }));
+                            } catch (error) {
+                              setState(() {
+                                _isLoading = false;
+                              });
+                              callSnackbar(
+                                  "An error occurred: No internet connection. Please check your network.");
+                            } finally {
+                              setState(() {
+                                _isLoading = false;
+                              });
+                            }
+                          } else {
+                            callSnackbar(check);
+                          }
                         }
                       },
                       child: Text(

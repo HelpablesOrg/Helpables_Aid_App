@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:helpables/Modal/LocationHelper.dart';
 import '../Modal/PlaceLocation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -13,10 +15,21 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   LatLng? _pickedLocation;
-  void _selectLocation(LatLng position) {
+  void _selectLocation(LatLng position) async {
     setState(() {
       _pickedLocation = position;
     });
+    try {
+      await LocationHelper.getLocationAddress(
+          position.latitude, position.longitude);
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("No internet connection. Please check your network.",
+              style: TextStyle(color: Colors.white)),
+        ),
+      );
+    }
   }
 
   @override
