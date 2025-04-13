@@ -9,7 +9,7 @@ workflows:
       groups:
         - google_credentials # <-- (Includes GCLOUD_SERVICE_ACCOUNT_CREDENTIALS)
       vars:
-        PACKAGE_NAME: "com.helpables.app" # <-- Put your package name here
+        PACKAGE_NAME: "com.helpables.app"
         GOOGLE_PLAY_TRACK: "internal"
       flutter: stable
     scripts:
@@ -21,7 +21,7 @@ workflows:
           flutter packages pub get
       - name: Build AAB with Flutter
         script: |
-          BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))      
+          BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
           flutter build appbundle --release \
             --build-name=1.0.$BUILD_NUMBER \
             --build-number=$BUILD_NUMBER
@@ -42,8 +42,7 @@ workflows:
         credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
         track: internal
         submit_as_draft: true
-
- ios_testflight:
+  ios_testflight:
     name: iOS TestFlight Build
     max_build_duration: 60
     environment:
@@ -60,10 +59,10 @@ workflows:
           flutter build ios --release --no-codesign
     artifacts:
       - build/ios/ipa/*.ipa
-    publish:
+    publishing:
       app_store_connect:
-        api_key_id: 4LT664UP5M  # Replace with your App Store Connect API Key ID
-        issuer_id: 1c9faeaf-068e-4d60-811e-60f2db7f1392  # Replace with your App Store Connect Issuer ID
+        api_key_id: 4LT664UP5M
+        issuer_id: 1c9faeaf-068e-4d60-811e-60f2db7f1392
         bundle_id: com.helpables.app
         ipa_path: build/ios/ipa/Runner.ipa
         submit_to_testflight: true
