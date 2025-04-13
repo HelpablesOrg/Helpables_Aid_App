@@ -43,7 +43,7 @@ workflows:
         track: internal
         submit_as_draft: true
 
-        workflows:
+
   ios:
     name: Build and Upload Helpables to TestFlight
     platform: ios
