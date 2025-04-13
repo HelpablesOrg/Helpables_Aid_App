@@ -42,3 +42,34 @@ workflows:
         credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
         track: internal
         submit_as_draft: true
+
+        workflows:
+  ios:
+    name: Build and Upload Helpables to TestFlight
+    platform: ios
+    flutter: stable
+    sdk: iphoneos
+    environment:
+      vars:
+        FLUTTER_BUILD_NAME: "1.0.0"
+        FLUTTER_BUILD_NUMBER: "1"
+    scripts:
+      - name: Install Flutter dependencies
+        script: |
+          flutter pub get  # Install dependencies for Flutter
+      - name: Build the iOS app
+        script: |
+          flutter build ios --release --no-codesign  # Build without signing (Codemagic handles signing)
+    build:
+      ios:
+        targets:
+          - "Runner"
+        configuration: Release
+    publish:
+      app_store_connect:
+        api_key_id: 4LT664UP5M  # Replace with your App Store Connect API Key ID
+        issuer_id: 1c9faeaf-068e-4d60-811e-60f2db7f1392  # Replace with your App Store Connect Issuer ID
+        ipa_path: build/ios/ipa/Runner.ipa  # Path to the generated IPA file
+        skip_submission: false  # Set to 'false' to submit the app to TestFlight automatically
+        skip_waiting_for_build_processing: false  # Ensure the build is processed before submission
+        notify_testers: true  # Notifies testers when the app is uploaded to TestFlight
