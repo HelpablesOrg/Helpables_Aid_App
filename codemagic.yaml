@@ -61,9 +61,11 @@ workflows:
       - build/ios/ipa/*.ipa
     publishing:
       app_store_connect:
-        api_key: appstore_key
-        api_key_id: 4LT664UP5M
-        issuer_id: 1c9faeaf-068e-4d60-811e-60f2db7f1392
+        authentication:
+          type: api_key
+          key_id: 4LT664UP5M
+          issuer_id: 1c9faeaf-068e-4d60-811e-60f2db7f1392
+          private_key: Codemagic Key
         bundle_id: com.helpables.app
         ipa_path: build/ios/ipa/Runner.ipa
         submit_to_testflight: true
