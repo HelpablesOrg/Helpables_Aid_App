@@ -42,29 +42,35 @@ workflows:
         credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
         track: internal
         submit_as_draft: true
-  ios_testflight:
-    name: iOS TestFlight Build
+ios-testflight:
+    name: iOS TestFlight Upload
+    instance_type: mac_mini_m2
     max_build_duration: 60
     environment:
       flutter: stable
+      xcode: latest
       vars:
+        BUNDLE_ID: "com.helpables.app"
         FLUTTER_BUILD_NAME: "1.0.0"
         FLUTTER_BUILD_NUMBER: "1"
+      groups:
+        - app_store_credentials
+        - ios_code_signing
     scripts:
-      - name: Install Flutter dependencies
+      - name: Get Flutter packages
         script: |
           flutter pub get
-      - name: Build iOS app
+      - name: Build iOS release
         script: |
-          flutter build ios --release --no-codesign
+          flutter build ipa \
+            --release \
+            --export-method app-store \
+            --build-name=$FLUTTER_BUILD_NAME \
+            --build-number=$FLUTTER_BUILD_NUMBER
     artifacts:
       - build/ios/ipa/*.ipa
     publishing:
       app_store_connect:
         api_key: Codemagic Key
-        api_key_id: 4LT664UP5M
-        issuer_id: 1c9faeaf-068e-4d60-811e-60f2db7f1392
-        bundle_id: com.helpables.app
-        ipa_path: build/ios/ipa/Runner.ipa
         submit_to_testflight: true
         notify_testers: true
