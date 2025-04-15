@@ -72,8 +72,7 @@ workflows:
       certificates:
         - certificate_name: Ios_Codemagic_key
       provisioning_profiles:
-        - bundle_identifier: "com.helpables.app"
-          profile_name: Helpables_AppStore_Profile
+        - Helpables_AppStore_Profile.mobileprovision
     publishing:
       app_store_connect:
         auth: integration
