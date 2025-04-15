@@ -71,6 +71,7 @@ workflows:
       - build/ios/ipa/*.ipa
     publishing:
       app_store_connect:
-        api_key: Codemagic Key
+        auth: integration
+        bundle_id: com.helpables.app
         submit_to_testflight: true
         notify_testers: true
