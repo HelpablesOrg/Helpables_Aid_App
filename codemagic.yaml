@@ -72,6 +72,6 @@ workflows:
     publishing:
       app_store_connect:
         auth: integration
-        bundle_id: com.helpables.app
+        
         submit_to_testflight: true
-        notify_testers: true
+        
