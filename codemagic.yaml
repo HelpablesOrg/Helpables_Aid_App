@@ -68,11 +68,6 @@ workflows:
             --build-number=$FLUTTER_BUILD_NUMBER
     artifacts:
       - build/ios/ipa/*.ipa
-    code_signing:
-      certificates:
-        - certificate_name: Ios_Codemagic_key
-      provisioning_profiles:
-        - Helpables_AppStore_Profile.mobileprovision
     publishing:
       app_store_connect:
         auth: integration
