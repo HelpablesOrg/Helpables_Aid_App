@@ -42,7 +42,7 @@ workflows:
         credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
         track: internal
         submit_as_draft: true
-ios-testflight:
+  ios-testflight:
     name: iOS TestFlight Upload
     instance_type: mac_mini_m2
     max_build_duration: 60
