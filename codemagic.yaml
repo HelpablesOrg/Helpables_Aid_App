@@ -68,6 +68,12 @@ workflows:
             --build-number=$FLUTTER_BUILD_NUMBER
     artifacts:
       - build/ios/ipa/*.ipa
+    code_signing:
+      certificates:
+        - certificate_name: Ios_Codemagic_key
+      provisioning_profiles:
+        - bundle_identifier: "com.helpables.app"
+          profile_name: Helpables_AppStore_Profile
     publishing:
       app_store_connect:
         auth: integration
