@@ -55,11 +55,6 @@ workflows:
         BUNDLE_ID: "com.helpables.app"
         FLUTTER_BUILD_NAME: "1.0.0"
         FLUTTER_BUILD_NUMBER: "1"
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: "com.helpables.app"
-        certificate: "Ios_Codemagic_key"
-        provisioning_profile: "Helpables_AppStore_Profile"
     scripts:
       # ... 
     artifacts:
