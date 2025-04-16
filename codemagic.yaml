@@ -66,7 +66,7 @@ workflows:
         script: |
           flutter build ipa \
             --release \
-            --export-method app-store \
+            --export-method app_store \
             --build-name=$FLUTTER_BUILD_NAME \
             --build-number=$FLUTTER_BUILD_NUMBER
     artifacts:
