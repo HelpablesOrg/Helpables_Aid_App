@@ -49,9 +49,8 @@ workflows:
     integrations:
       app_store_connect: Codemagic Key
     environment:
-      groups:
-        - ios_code_signing
-        - appstore_credentials 
+      flutter: stable
+      xcode: latest
       vars:
         BUNDLE_ID: "com.helpables.app"
         FLUTTER_BUILD_NAME: "1.0.0"
