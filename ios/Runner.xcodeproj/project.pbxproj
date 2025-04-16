@@ -309,6 +309,8 @@
                                 CODE_SIGN_STYLE = Automatic;
                                 DEVELOPMENT_TEAM = S7JG64M46R; 
                                 PROVISIONING_PROFILE_SPECIFIER = "Helpables_AppStore_Profile";
+                                CODE_SIGNING_REQUIRED = NO;
+                                CODE_SIGNING_ALLOWED = NO;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
