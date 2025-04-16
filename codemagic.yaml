@@ -57,8 +57,6 @@ workflows:
         FLUTTER_BUILD_NUMBER: "1"
       ios_signing:
         distribution_type: app_store
-        provisioning_profile: "Helpables_AppStore_Profile"
-        certificate: "Ios_Codemagic_key"
         bundle_identifier: "com.helpables.app"
     scripts:
       - name: Get Flutter packages
