@@ -59,12 +59,7 @@ workflows:
         distribution_type: app_store
         bundle_identifier: "com.helpables.app"
     scripts:
-      - name: Get Flutter packages
-        script: |
-          flutter pub get
-      - name: Build iOS release
-        script: 
-          # ... 
+      # ... 
     artifacts:
       - build/ios/ipa/*.ipa
     publishing:
