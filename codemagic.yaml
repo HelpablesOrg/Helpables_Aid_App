@@ -58,6 +58,8 @@ workflows:
       ios_signing:
         distribution_type: app_store
         bundle_identifier: "com.helpables.app"
+        certificate: "Ios_Codemagic_key"
+        provisioning_profile: "Helpables_AppStore_Profile"
     scripts:
       # ... 
     artifacts:
