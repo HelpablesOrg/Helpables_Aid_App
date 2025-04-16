@@ -59,6 +59,7 @@ workflows:
         distribution_type: app_store
         provisioning_profile: "Helpables_AppStore_Profile"
         certificate: "Ios_Codemagic_key"
+        bundle_identifier: "com.helpables.app"
     scripts:
       - name: Get Flutter packages
         script: |
