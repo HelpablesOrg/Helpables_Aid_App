@@ -1,5 +1,5 @@
 # Add this line at the very top
-platform :ios, '13.0'
+platform :ios, '14.0'
 
 # ------ Standard Flutter Podfile content below ------
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
