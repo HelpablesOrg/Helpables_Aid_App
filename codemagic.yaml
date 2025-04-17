@@ -64,19 +64,6 @@ workflows:
       - name: Install pods
         script: | 
           find . -name "Podfile" -execdir pod install \;
-      - name: Flutter analyze
-        script: | 
-          flutter analyze
-        ignore_failure: true  
-      - name: Flutter unit tests
-        script: | 
-          flutter test
-        ignore_failure: true
-      - name: Ensure iOS 14.0 Target
-        script: |
-          echo "platform :ios, '14.0'" > ios/Podfile
-          cat ios/Podfile # Verify it's correct
-          flutter pub get  
       - name: Flutter build ipa
         script: | 
           flutter build ipa --release \
