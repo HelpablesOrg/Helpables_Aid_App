@@ -1,3 +1,5 @@
+import 'package:helpables/Providers/aidrequests_provider.dart';
+
 import '../Modal/LocationHelper.dart';
 import '../Providers/User_provider.dart';
 import '../Providers/add_aid_requestprov.dart';
@@ -12,7 +14,8 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  const String apiKey = String.fromEnvironment("GOOGLE_MAPS_API_KEY", defaultValue: "");
+  const String apiKey =
+      String.fromEnvironment("GOOGLE_MAPS_API_KEY", defaultValue: "");
   await LocationHelper.saveApiKey(apiKey);
   await Firebase.initializeApp();
   runApp(
@@ -22,6 +25,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => AddAidRequestProvider()),
         ChangeNotifierProvider(create: (context) => UserInfoProvider()),
         ChangeNotifierProvider(create: (context) => CategoriesProvider()),
+        ChangeNotifierProvider(create: (context) => AidRequestsProvider()),
       ],
       child: MyApp(),
     ),
@@ -35,8 +39,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: FutureBuilder(
-          future: Provider.of<UserInfoProvider>(context, listen: false)
-              .setUserDetails(),
+          future: Future.wait([
+            Provider.of<UserInfoProvider>(context, listen: false)
+                .setUserDetails(),
+            Provider.of<AidRequestsProvider>(context, listen: false)
+                .fetchAidRequests(),
+          ]),
           builder: (context, userDetailsSnapshot) {
             if (userDetailsSnapshot.connectionState ==
                 ConnectionState.waiting) {
@@ -57,6 +65,7 @@ class MyApp extends StatelessWidget {
                   final user = snapshot.data;
                   Provider.of<UserInfoProvider>(context, listen: false)
                       .memberCheck(user?.email.toString(), context);
+
                   return HomeScreen();
                 }
 
