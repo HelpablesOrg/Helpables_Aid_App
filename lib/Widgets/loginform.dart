@@ -1,8 +1,7 @@
-// ignore_for_file: unused_local_variable
-
-import 'package:aid_app/Providers/login_and_signup_provider.dart';
-import 'package:aid_app/Screens/home_screen.dart';
-import 'package:aid_app/Widgets/email_password.dart';
+import '../Providers/User_provider.dart';
+import '../Providers/login_and_signup_provider.dart';
+import '../Screens/home_screen.dart';
+import '../Widgets/email_password.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
@@ -14,15 +13,16 @@ class Loginform extends StatefulWidget {
 }
 
 class _LoginformState extends State<Loginform> {
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool _isLoading = false;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Future<void> handleSubmit(bool isLogin, BuildContext ctx) async {
     if (!_formKey.currentState!.validate()) return;
+    final provider = Provider.of<UserInfoProvider>(context, listen: false);
+    provider.setUserDetails();
     if (isLogin) {
       try {
         setState(() {
-          _isLoading = true;
+          provider.checkLoading(true);
         });
         UserCredential userCredential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
@@ -31,6 +31,8 @@ class _LoginformState extends State<Loginform> {
                 password:
                     Provider.of<LoginAndSignupProvider>(ctx, listen: false)
                         .getPass());
+        Provider.of<UserInfoProvider>(ctx, listen: false)
+            .memberCheck(userCredential.user?.email, ctx);
 
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("You are logged in.")));
@@ -39,17 +41,17 @@ class _LoginformState extends State<Loginform> {
         }));
       } catch (e) {
         String error = e.toString().replaceAll(RegExp(r'\[firebase.*?\]'), '');
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Error logging in: " + error)));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Error logging in: $error")));
       } finally {
         setState(() {
-          _isLoading = false;
+          provider.checkLoading(false);
         });
       }
     } else {
       try {
         setState(() {
-          _isLoading = true;
+          provider.checkLoading(true);
         });
         UserCredential userCredential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -62,14 +64,11 @@ class _LoginformState extends State<Loginform> {
             content: Text('Account created: ${userCredential.user?.email}')));
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('Error signing up: ' +
-                e
-                    .toString()
-                    .replaceFirst('[firebase_auth/email-already-in-use]', "")
-                    .trim())));
+            content: Text(
+                'Error signing up: ${e.toString().replaceFirst('[firebase_auth/email-already-in-use]', "").trim()}')));
       } finally {
         setState(() {
-          _isLoading = false;
+          provider.checkLoading(false);
         });
       }
     }
@@ -81,13 +80,13 @@ class _LoginformState extends State<Loginform> {
     bool isLogin = provider.isLogin;
     return Stack(
       children: [
-        Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           Container(
             alignment: Alignment.center,
             child: Image.asset(
               'assets/images/9-removebg-preview.png',
               fit: BoxFit.cover,
-              height: MediaQuery.of(context).size.height * 0.16,
+              height: MediaQuery.of(context).size.height * 0.19,
               width: MediaQuery.of(context).size.width * 0.6,
             ),
           ),
@@ -125,10 +124,6 @@ class _LoginformState extends State<Loginform> {
                 ),
               )),
         ]),
-        if (_isLoading)
-          Center(
-            child: CircularProgressIndicator(),
-          ),
       ],
     );
   }

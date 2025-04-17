@@ -1,7 +1,10 @@
-import 'package:aid_app/Screens/login.dart';
+import '../Providers/User_provider.dart';
+import '../Screens/add_aid_request_screen.dart';
+import '../Screens/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -26,17 +29,36 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      body: Center(
-        child: ElevatedButton(
-            onPressed: () {
-              signOut();
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return LoginScreen();
-              }));
-            },
-            child: Text('Sign Out')),
-      ),
-    );
+        appBar: AppBar(
+          leading: IconButton(
+              onPressed: () {
+                signOut();
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return LoginScreen();
+                }));
+              },
+              icon: Icon(Icons.arrow_back)),
+        ),
+        body: Center(
+          child: ElevatedButton(
+              onPressed: () {
+                signOut();
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return LoginScreen();
+                }));
+              },
+              child: Text('Sign Out')),
+        ),
+        floatingActionButton:
+            Provider.of<UserInfoProvider>(context, listen: true).isMemeber
+                ? FloatingActionButton(
+                    child: Icon(Icons.add),
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return AddAidRequestScreen();
+                      }));
+                    })
+                : null);
   }
 }

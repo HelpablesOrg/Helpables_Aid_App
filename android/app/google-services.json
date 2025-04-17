@@ -14,11 +14,35 @@
       },
       "oauth_client": [
         {
+          "client_id": "58094471368-h3g98ik2ojglbqnchl1p5n78iki51tld.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aid_app",
+            "certificate_hash": "aaccf7a2bdb14286c69b9f6d534d0504997ce063"
+          }
+        },
+        {
+          "client_id": "58094471368-j2kd0hrlg79lisf08iac92cmbc685msn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aid_app",
+            "certificate_hash": "cd89098db33efa3d7ba8ff3449f79e56d01664d1"
+          }
+        },
+        {
           "client_id": "58094471368-linionqu1h7dlentkrt1ppbri9imrnfj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.aid_app",
             "certificate_hash": "09976c77729ab99027f114d8ded1b318752bb742"
+          }
+        },
+        {
+          "client_id": "58094471368-rkphmcdqg4e11p3bg7tnvopgt8m7udo4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.aid_app",
+            "certificate_hash": "92e3a73ae5930683df49eb329cf2f24e9e7e8c11"
           }
         },
         {
@@ -58,11 +82,71 @@
       },
       "oauth_client": [
         {
+          "client_id": "58094471368-lsjushso2obtr56g8s5g6h83r61oag7h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.helpables.app",
+            "certificate_hash": "aaccf7a2bdb14286c69b9f6d534d0504997ce063"
+          }
+        },
+        {
+          "client_id": "58094471368-osq56h8jgkj6clb7ffp9tch8t5pqn8f3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.helpables.app",
+            "certificate_hash": "cd89098db33efa3d7ba8ff3449f79e56d01664d1"
+          }
+        },
+        {
           "client_id": "58094471368-pu0dvk9p06gmmue346u8tkblhgid8o0s.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.helpables.app",
             "certificate_hash": "09976c77729ab99027f114d8ded1b318752bb742"
+          }
+        },
+        {
+          "client_id": "58094471368-i0si7ml3n92i3gdsmn68o8qkv79fl4nb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBd_PH_YOBYYbdMS8cGtJn0MBsQ2yv7sZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58094471368-i0si7ml3n92i3gdsmn68o8qkv79fl4nb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "58094471368-skpsdgfgsirp79p4rmv1c3ve2j35ev8q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.aidApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58094471368:android:23c1b90ee646f9fe667dfd",
+        "android_client_info": {
+          "package_name": "com.helpablesapp.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58094471368-4n425svc4f6s4360kn7cs4j57ooso92g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.helpablesapp.app",
+            "certificate_hash": "aaccf7a2bdb14286c69b9f6d534d0504997ce063"
           }
         },
         {
