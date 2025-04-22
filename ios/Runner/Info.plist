@@ -45,5 +45,18 @@
     <true/>
     <key>UIApplicationSupportsIndirectInputEvents</key>
     <true/>
+    <key>io.flutter.embedded_views_preview</key>
+    <true/>
+    <key>FLTEnableSnapshotting</key>
+    <false/>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need your location to provide nearby services</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need access to photos for uploads</string><key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+        <string>location</string>
+    </array>
+    
 </dict>
 </plist>
