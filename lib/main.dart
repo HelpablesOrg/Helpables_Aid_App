@@ -12,10 +12,10 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp();
+   
   const String apiKey = String.fromEnvironment("GOOGLE_MAPS_API_KEY", defaultValue: "");
   await LocationHelper.saveApiKey(apiKey);
-
+ await Firebase.initializeApp();
   runApp(
     MultiProvider(
       providers: [
