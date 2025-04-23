@@ -40,7 +40,7 @@ target 'Runner' do
   pod 'Firebase/Storage'       # For Cloud Storage
   pod 'GoogleSignIn', '~> 6.2' # Latest stable version
 
-  pod 'GoogleMaps', ''8.4.0'    # Latest Maps SDK
+  pod 'GoogleMaps', '8.4.0'    # Latest Maps SDK
   pod 'Google-Maps-iOS-Utils' , '6.1.0' 
 end
 
