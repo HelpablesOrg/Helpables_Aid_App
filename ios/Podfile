@@ -41,7 +41,6 @@ target 'Runner' do
   # pod 'GoogleSignIn', '~> 6.2' 
 
   pod 'GoogleMaps', '8.4.0'    # Latest Maps SDK
-  pod 'Google-Maps-iOS-Utils' , '6.1.0' 
 end
 
 post_install do |installer|
