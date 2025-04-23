@@ -57,6 +57,16 @@
         <string>fetch</string>
         <string>location</string>
     </array>
-    
+     <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/> 
+    </dict>
+
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>googlechromes</string>
+        <string>comgooglemaps</string>
+    </array>
 </dict>
 </plist>
