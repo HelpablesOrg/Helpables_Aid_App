@@ -33,10 +33,16 @@ target 'Runner' do
 
   # Flutter pods
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
-  
-  # Add your plugin pods here if they're not automatically detected
-  # pod 'Firebase/Core'
-  # pod 'GoogleMaps'
+  pod 'Firebase/CoreOnly'
+  pod 'Firebase/AnalyticsWithoutAdIdSupport'
+  pod 'Firebase/Firestore'     # For Firestore
+  pod 'Firebase/Auth'          # For Authentication
+  pod 'Firebase/Storage'       # For Cloud Storage
+  pod 'GoogleSignIn', '~> 6.2' # Latest stable version
+
+  # ===== GOOGLE MAPS ===== (Only if using maps)
+  pod 'GoogleMaps', '~> 7.0'   # Latest Maps SDK
+  pod 'Google-Maps-iOS-Utils'
 end
 
 post_install do |installer|
@@ -45,6 +51,10 @@ post_install do |installer|
     target.build_configurations.each do |config|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
       config.build_settings['SWIFT_VERSION'] = '5.0'
+      config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= [
+        '$(inherited)',
+        'PERMISSION_MAPS=1',
+      ]
     end
   end
 end
