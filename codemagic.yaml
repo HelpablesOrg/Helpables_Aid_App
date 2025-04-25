@@ -130,6 +130,8 @@ workflows:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
+      - /Users/builder/Library/Logs/DiagnosticReports/*.crash
+      - /tmp/xcodebuild_logs/*.log
     publishing:
       email:
         recipients:
