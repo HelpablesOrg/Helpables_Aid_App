@@ -53,6 +53,7 @@ workflows:
         bundle_identifier: com.helpables.app
       vars:
         APP_STORE_APPLE_ID: 6744557317
+        GOOGLE_MAPS_API_KEY:  $GOOGLE_MAPS_API_KEY
       flutter: stable
     scripts:
       - name: Set up code signing settings on Xcode project
@@ -121,13 +122,16 @@ workflows:
       - name: Flutter build ipa
         script: | 
           flutter build ipa --release \
-            --build-name=1.0.0 \
-            --build-number=$(($(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID") + 1)) \
+            --build-name=1.0.1 \
+            --build-number=4\
+            --dart-define=GOOGLE_MAPS_API_KEY=$GOOGLE_MAPS_API_KEY \
             --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
+      - /Users/builder/Library/Logs/DiagnosticReports/*.crash
+      - /tmp/xcodebuild_logs/*.log
     publishing:
       email:
         recipients:
