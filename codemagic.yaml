@@ -120,16 +120,18 @@ workflows:
           </document>
           EOL
 
-      - name: Flutter build ipa
+      - name: Flutter build ipa and capture logs
         script: | 
-          flutter build ipa --release \
+          set -o pipefail && flutter build ipa --release \
             --build-name=1.0.2 \
-            --build-number=7\
+            --build-number=8 \
             --dart-define=GOOGLE_MAPS_API_KEY=$GOOGLE_MAPS_API_KEY \
-            --export-options-plist=/Users/builder/export_options.plist
+            --export-options-plist=/Users/builder/export_options.plist 2>&1 | tee flutter_build.log
+
     artifacts:
       - build/ios/ipa/*.ipa
       - build/ios/profile/*.app
+      - flutter_build.log
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
       - /Users/builder/Library/Logs/DiagnosticReports/*.crash
