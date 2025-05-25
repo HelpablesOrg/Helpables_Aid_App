@@ -1,0 +1,2 @@
+C:/Users/Admin/aid_app2-20250101T162400Z-001/aid_app2/android/app/.cxx/Debug/4e1u3l4j/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/Admin/aid_app2-20250101T162400Z-001/aid_app2/android/app/.cxx/Debug/4e1u3l4j/x86_64/CMakeFiles/rebuild_cache.dir

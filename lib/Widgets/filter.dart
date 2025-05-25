@@ -59,6 +59,9 @@ class _FilterScreenState extends State<FilterScreen> {
     });
   }
 
+  Color borderColor = Color(0xFF02012D);
+  Color textColor = Color(0xFF00324C);
+
   @override
   Widget build(BuildContext context) {
     final categoryItems =
@@ -90,10 +93,13 @@ class _FilterScreenState extends State<FilterScreen> {
               ),
               SizedBox(height: 10),
               Text("Filters",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: const Color.fromARGB(255, 0, 92, 168))),
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: textColor)),
               SizedBox(height: 10),
               Divider(
-                color: Colors.blueGrey,
+                color: borderColor,
               ),
               SizedBox(height: 8),
               Expanded(
@@ -111,7 +117,7 @@ class _FilterScreenState extends State<FilterScreen> {
                             showLocations = false;
                           }),
                           child: Text("Category",
-                              style: TextStyle(color: Colors.blue[900])),
+                              style: TextStyle(color: textColor)),
                         ),
                         SizedBox(height: 10),
                         ElevatedButton(
@@ -123,14 +129,14 @@ class _FilterScreenState extends State<FilterScreen> {
                             showCategories = false;
                           }),
                           child: Text("Location",
-                              style: TextStyle(color: Colors.blue[900])),
+                              style: TextStyle(color: textColor)),
                         ),
                       ],
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: VerticalDivider(
-                        color: Colors.blueGrey,
+                        color: borderColor,
                         thickness: 1,
                         width: 1,
                       ),
@@ -159,7 +165,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                         .selectedCategory = category.title),
                                     leading: widget.selectedCategory ==
                                             category.title
-                                        ? Icon(Icons.check, color: Colors.blue)
+                                        ? Icon(Icons.check, color: textColor)
                                         : null,
                                   );
                                 }).toList(),
@@ -192,7 +198,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                           leading:
                                               widget.selectedLocation == loc
                                                   ? Icon(Icons.check,
-                                                      color: Colors.blue)
+                                                      color: textColor)
                                                   : null,
                                         );
                                       }).toList(),
@@ -225,7 +231,7 @@ class _FilterScreenState extends State<FilterScreen> {
                       },
                       child: Text(
                         "Clear Filters",
-                        style: TextStyle(color: (Colors.blue[900])),
+                        style: TextStyle(color: textColor),
                       ),
                     ),
                   ),
@@ -242,7 +248,7 @@ class _FilterScreenState extends State<FilterScreen> {
                         });
                       },
                       child: Text("Show Results",
-                          style: TextStyle(color: Colors.blue[900])),
+                          style: TextStyle(color: textColor)),
                     ),
                   ),
                 ],

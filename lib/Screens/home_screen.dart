@@ -82,6 +82,11 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Color filterBorder = Color(0xFF02012D);
+  Color filterText = Color(0xFF00324C);
+  Color filterIcons = Color(0xFF00324C);
+  Color filterbg = Color(0xFFB0D5E8);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,27 +97,27 @@ class _HomeScreenState extends State<HomeScreen> {
         automaticallyImplyLeading: false,
         title: Container(
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.blueGrey),
+            border: Border.all(color: filterText),
             borderRadius: BorderRadius.circular(25),
             color: Colors.white,
           ),
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: [
-              Icon(Icons.search, color: Colors.indigo[900]),
+              Icon(Icons.search, color: filterBorder),
               SizedBox(width: 8),
               Expanded(
                 child: TextField(
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: "Search By title or category",
-                    hintStyle: TextStyle(color: Colors.indigo[900]),
+                    hintStyle: TextStyle(color: filterBorder),
                   ),
                   onChanged: _updateSearch,
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.menu, color: Colors.indigo[900]),
+                icon: Icon(Icons.menu, color: filterBorder),
                 onPressed: () {
                   _scaffoldKey.currentState?.openDrawer();
                 },
@@ -160,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: Colors.white,
               child: Icon(
                 Icons.add,
-                color: Colors.blue[900],
+                color: filterBorder,
               ),
               onPressed: () {
                 Provider.of<AddAidRequestProvider>(context, listen: false)
@@ -173,83 +178,89 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.1,
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ElevatedButton.icon(
-                  onPressed:
-                      (selectedCategory != null || selectedLocation != null)
-                          ? _clearFilters
-                          : _openFilterScreen,
-                  icon: Icon(
-                    (selectedCategory != null || selectedLocation != null)
-                        ? Icons.clear
-                        : Icons.filter_alt,
-                    color: Colors.white,
-                  ),
-                  label: Text('Filter', style: TextStyle(color: Colors.white)),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue[800],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16, top: 8, bottom: 8),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed:
+                          (selectedCategory != null || selectedLocation != null)
+                              ? _clearFilters
+                              : _openFilterScreen,
+                      icon: Icon(
+                        (selectedCategory != null || selectedLocation != null)
+                            ? Icons.clear
+                            : Icons.filter_alt,
+                        color: filterIcons,
+                      ),
+                      label:
+                          Text('Filter', style: TextStyle(color: filterText)),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            side: BorderSide(color: filterBorder)),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      ),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  ),
+                    SizedBox(width: 8),
+                    if (selectedCategory != null)
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          setState(() {
+                            selectedCategory = null;
+                          });
+                        },
+                        icon: Icon(
+                          Icons.clear,
+                          color: filterBorder,
+                        ),
+                        label: Text(selectedCategory!,
+                            style: TextStyle(color: filterBorder)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: filterbg,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        ),
+                      ),
+                    SizedBox(width: 8),
+                    if (selectedLocation != null)
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          setState(() {
+                            selectedLocation = null;
+                          });
+                        },
+                        icon: Icon(
+                          Icons.clear,
+                          color: filterBorder,
+                        ),
+                        label: Text(selectedLocation!,
+                            style: TextStyle(color: filterBorder)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: filterbg,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        ),
+                      ),
+                  ],
                 ),
-                SizedBox(width: 8),
-                if (selectedCategory != null)
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      setState(() {
-                        selectedCategory = null;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.clear,
-                      color: Colors.white,
-                    ),
-                    label: Text(selectedCategory!,
-                        style: TextStyle(color: Colors.white)),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[800],
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    ),
-                  ),
-                SizedBox(width: 8),
-                if (selectedLocation != null)
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      setState(() {
-                        selectedLocation = null;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.clear,
-                      color: Colors.white,
-                    ),
-                    label: Text(selectedLocation!,
-                        style: TextStyle(color: Colors.white)),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[800],
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    ),
-                  ),
-              ],
+              ),
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.76,
+            height: MediaQuery.of(context).size.height * 0.74,
             width: MediaQuery.of(context).size.width,
             child: _getScreenForIndex(_selectedIndex),
           ),
