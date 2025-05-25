@@ -9,7 +9,7 @@ workflows:
       groups:
         - google_credentials # <-- (Includes GCLOUD_SERVICE_ACCOUNT_CREDENTIALS)
       vars:
-        PACKAGE_NAME: "com.helpables.app" # <-- Put your package name here
+        PACKAGE_NAME: "com.helpables.app"
         GOOGLE_PLAY_TRACK: "internal"
       flutter: stable
     scripts:
@@ -21,7 +21,7 @@ workflows:
           flutter packages pub get
       - name: Build AAB with Flutter
         script: |
-          BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))      
+          BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
           flutter build appbundle --release \
             --build-name=1.0.$BUILD_NUMBER \
             --build-number=$BUILD_NUMBER
@@ -42,40 +42,114 @@ workflows:
         credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
         track: internal
         submit_as_draft: true
-        
-        workflows:
-  ios:
-    name: Build and Upload Helpables to TestFlight
-    platform: ios
-    flutter: stable
-    sdk: iphoneos
+  ios-workflow:
+    name: iOS Workflow
+    max_build_duration: 120
+    integrations:
+      app_store_connect: Codemagic Key
     environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.helpables.app
       vars:
-        FLUTTER_BUILD_NAME: "1.0.0"
-        FLUTTER_BUILD_NUMBER: "1"
+        APP_STORE_APPLE_ID: 6744557317
+        GOOGLE_MAPS_API_KEY:  $GOOGLE_MAPS_API_KEY
+      flutter: stable
     scripts:
-      - name: Install Flutter dependencies
+      - name: Set up code signing settings on Xcode project
+        script: | 
+          xcode-project use-profiles
+      - name: Get Flutter packages
+        script: | 
+          flutter pub get
+      - name: Install pods
+        script: | 
+          find . -name "Podfile" -execdir pod install \;
+      - name: Restore Missing Storyboard Files
         script: |
-          flutter pub get  # Install dependencies for Flutter
-      - name: Build the iOS app
-        script: |
-          flutter build ios --release --no-codesign  # Build without signing (Codemagic handles signing)
-    build:
-      ios:
-        targets:
-          - "Runner"
-        configuration: Release
-    publish:
+          mkdir -p ios/Runner/Base.lproj
+          cat > ios/Runner/Base.lproj/Main.storyboard << 'EOL'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+              <device id="retina6_1" orientation="portrait" appearance="light"/>
+              <dependencies>
+                  <deployment identifier="iOS"/>
+                  <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+              </dependencies>
+              <scenes>
+                  <scene sceneID="EHf-IW-A2E">
+                      <objects>
+                          <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                              <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                                  <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                  <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                  <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                              </view>
+                          </viewController>
+                          <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                      </objects>
+                      <point key="canvasLocation" x="52" y="374.66266866566718"/>
+                  </scene>
+              </scenes>
+          </document>
+          EOL
+
+          cat > ios/Runner/Base.lproj/LaunchScreen.storyboard << 'EOL'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+              <device id="retina6_1" orientation="portrait" appearance="light"/>
+              <dependencies>
+                  <deployment identifier="iOS"/>
+                  <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+              </dependencies>
+              <scenes>
+                  <scene sceneID="EHf-IW-A2E">
+                      <objects>
+                          <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                              <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                                  <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                  <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                  <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                              </view>
+                          </viewController>
+                          <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                      </objects>
+                      <point key="canvasLocation" x="52" y="374.66266866566718"/>
+                  </scene>
+              </scenes>
+          </document>
+          EOL
+      - name: Flutter build ipa
+        script: | 
+          flutter build ipa --release \
+            --build-name=1.0.1 \
+            --build-number=4\
+            --dart-define=GOOGLE_MAPS_API_KEY=$GOOGLE_MAPS_API_KEY \
+            --export-options-plist=/Users/builder/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+      - /Users/builder/Library/Logs/DiagnosticReports/*.crash
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      email:
+        recipients:
+          - cliqueadmin@helpables.org
+          - anam@helpables.org
+        notify:
+          success: true
+          failure: false
       app_store_connect:
-        api_key_id: 4LT664UP5M  # Replace with your App Store Connect API Key ID
-        issuer_id: 1c9faeaf-068e-4d60-811e-60f2db7f1392  # Replace with your App Store Connect Issuer ID
-        ipa_path: build/ios/ipa/Runner.ipa  # Path to the generated IPA file
-        skip_submission: false  # Set to 'false' to submit the app to TestFlight automatically
-        skip_waiting_for_build_processing: false  # Ensure the build is processed before submission
-        notify_testers: true  # Notifies testers when the app is uploaded to TestFlight
+        auth: integration
 
+        # Configuration related to TestFlight (optional)
+        # Note: This action is performed during post-processing.
+        submit_to_testflight: true
+        beta_groups: # Specify the names of beta tester groups that will get access to the build once it has passed beta review.
+          - group name 1
+          - group name 2
 
-
-
-
-
+        # Configuration related to App Store (optional)
+        # Note: This action is performed during post-processing.
+        submit_to_app_store: false
