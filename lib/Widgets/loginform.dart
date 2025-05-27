@@ -1,3 +1,4 @@
+import 'package:helpables/Modal/app_colors.dart';
 import 'package:helpables/Providers/aidrequests_provider.dart';
 
 import '../Providers/User_provider.dart';
@@ -116,7 +117,7 @@ class _LoginformState extends State<Loginform> {
                             padding: EdgeInsets.all(8),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16)),
-                            backgroundColor: Colors.blue[900]),
+                            backgroundColor: AppColors.buttonColor),
                         child: Text(
                           isLogin ? 'Log in' : 'Sign Up',
                           style: TextStyle(color: Colors.white, fontSize: 16),

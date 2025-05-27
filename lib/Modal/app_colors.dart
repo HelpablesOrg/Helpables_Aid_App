@@ -15,6 +15,4 @@ class AppColors {
 
   
   static const Color filterBackgroundColor = Color(0xFFB0D5E8);
-
-  // Add other colors here…
 }

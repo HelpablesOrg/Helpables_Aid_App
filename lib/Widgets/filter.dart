@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:helpables/Providers/aidrequests_provider.dart';
 import 'package:helpables/Providers/categories_providers.dart';
 
+// ignore: must_be_immutable
 class FilterScreen extends StatefulWidget {
   FilterScreen(
       {super.key,

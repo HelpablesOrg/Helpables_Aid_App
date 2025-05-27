@@ -96,7 +96,7 @@ class _AidRequestListState extends State<AidRequestList> {
                             horizontal: 16, vertical: 8),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
-                          side: BorderSide(color: AppColors.backgroundColor),
+                          side: BorderSide(color: AppColors.BordersColor),
                         ),
                         child: Row(
                           children: [

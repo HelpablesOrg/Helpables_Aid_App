@@ -1,3 +1,5 @@
+import 'package:helpables/Modal/app_colors.dart';
+
 import '../Providers/add_aid_requestprov.dart';
 import '../Providers/categories_providers.dart';
 import '../Screens/home_screen.dart';
@@ -62,8 +64,7 @@ class _AddAidRequestScreenState extends State<AddAidRequestScreen> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(14)),
                         backgroundColor:
-                            (const Color.fromARGB(255, 7, 77, 134)),
-                      ),
+                          AppColors.buttonColor),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           String check = provider.validateRequestData();

@@ -1,3 +1,4 @@
+import 'package:helpables/Modal/app_colors.dart';
 import 'package:helpables/Providers/aidrequests_provider.dart';
 
 import '../Providers/User_provider.dart';
@@ -136,7 +137,7 @@ class _Google_LoginState extends State<Google_Login> {
                   },
                   child: Text(isLogin
                       ? "Don't have an account? Sign Up"
-                      : 'Already have an account? Log In')),
+                      : 'Already have an account? Log In', style: TextStyle(color: AppColors.TextsColor),)),
             )
           ],
         ),
