@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:helpables/Modal/app_colors.dart';
 import 'package:helpables/Providers/aidrequests_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -57,18 +58,15 @@ class _AidRequestDetailScreenState extends State<AidRequestDetailScreen> {
     return cleaned.trim();
   }
 
-  Color blue = Color(0xFF005481);
-  Color buttonColor = Color(0xFF004164);
-
   @override
   Widget build(BuildContext context) {
     final request = Provider.of<AidRequestsProvider>(context)
         .getRequestsList()[widget.requestIndex];
 
     return Scaffold(
-      backgroundColor: blue,
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        backgroundColor: blue,
+        backgroundColor: AppColors.backgroundColor,
         elevation: 0,
         leading: BackButton(color: Colors.white),
         title: const Text('Aid Request Details',
@@ -112,6 +110,7 @@ class _AidRequestDetailScreenState extends State<AidRequestDetailScreen> {
                             width: 250,
                             fit: BoxFit.cover,
                             errorBuilder: (_, __, ___) => Container(
+                              width: double.infinity,
                               color: Colors.grey[300],
                               child: const Icon(Icons.image_not_supported),
                             ),
@@ -162,10 +161,10 @@ class _AidRequestDetailScreenState extends State<AidRequestDetailScreen> {
                               backgroundColor: Colors.white,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),
-                                  side: BorderSide(color: buttonColor)),
+                                  side: BorderSide(color: AppColors.buttonColor)),
                               label: Text(
                                 request.CategoryTitle,
-                                style: TextStyle(color: buttonColor),
+                                style: TextStyle(color: AppColors.buttonColor),
                               ),
                             ),
                           ],
@@ -187,10 +186,10 @@ class _AidRequestDetailScreenState extends State<AidRequestDetailScreen> {
                                 backgroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),
-                                    side: BorderSide(color: buttonColor)),
+                                    side: BorderSide(color: AppColors.buttonColor)),
                                 label: Text(
                                   _cleanSubCategoryText(subCat.toString()),
-                                  style: TextStyle(color:buttonColor),
+                                  style: TextStyle(color:AppColors.buttonColor),
                                 ),
                               );
                             }).toList(),
@@ -258,7 +257,7 @@ class _AidRequestDetailScreenState extends State<AidRequestDetailScreen> {
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
                           fixedSize: Size(400, 40),
-                          backgroundColor: buttonColor,
+                          backgroundColor: AppColors.buttonColor,
                           alignment: Alignment.center,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),

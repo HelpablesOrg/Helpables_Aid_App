@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:helpables/Modal/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:helpables/Providers/aidrequests_provider.dart';
 import 'package:helpables/Providers/categories_providers.dart';
@@ -90,10 +91,13 @@ class _FilterScreenState extends State<FilterScreen> {
               ),
               SizedBox(height: 10),
               Text("Filters",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: const Color.fromARGB(255, 0, 92, 168))),
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.TextsColor)),
               SizedBox(height: 10),
               Divider(
-                color: Colors.blueGrey,
+                color: AppColors.BordersColor,
               ),
               SizedBox(height: 8),
               Expanded(
@@ -111,7 +115,7 @@ class _FilterScreenState extends State<FilterScreen> {
                             showLocations = false;
                           }),
                           child: Text("Category",
-                              style: TextStyle(color: Colors.blue[900])),
+                              style: TextStyle(color: AppColors.TextsColor)),
                         ),
                         SizedBox(height: 10),
                         ElevatedButton(
@@ -123,14 +127,14 @@ class _FilterScreenState extends State<FilterScreen> {
                             showCategories = false;
                           }),
                           child: Text("Location",
-                              style: TextStyle(color: Colors.blue[900])),
+                              style: TextStyle(color: AppColors.TextsColor)),
                         ),
                       ],
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       child: VerticalDivider(
-                        color: Colors.blueGrey,
+                        color: AppColors.BordersColor,
                         thickness: 1,
                         width: 1,
                       ),
@@ -159,7 +163,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                         .selectedCategory = category.title),
                                     leading: widget.selectedCategory ==
                                             category.title
-                                        ? Icon(Icons.check, color: Colors.blue)
+                                        ? Icon(Icons.check, color: AppColors.TextsColor)
                                         : null,
                                   );
                                 }).toList(),
@@ -189,11 +193,11 @@ class _FilterScreenState extends State<FilterScreen> {
                                             setState(() =>
                                                 widget.selectedLocation = loc);
                                           },
-                                          leading:
-                                              widget.selectedLocation == loc
-                                                  ? Icon(Icons.check,
-                                                      color: Colors.blue)
-                                                  : null,
+                                          leading: widget.selectedLocation ==
+                                                  loc
+                                              ? Icon(Icons.check,
+                                                  color: AppColors.TextsColor)
+                                              : null,
                                         );
                                       }).toList(),
                                     ),
@@ -225,7 +229,7 @@ class _FilterScreenState extends State<FilterScreen> {
                       },
                       child: Text(
                         "Clear Filters",
-                        style: TextStyle(color: (Colors.blue[900])),
+                        style: TextStyle(color: AppColors.TextsColor),
                       ),
                     ),
                   ),
@@ -242,7 +246,7 @@ class _FilterScreenState extends State<FilterScreen> {
                         });
                       },
                       child: Text("Show Results",
-                          style: TextStyle(color: Colors.blue[900])),
+                          style: TextStyle(color: AppColors.TextsColor)),
                     ),
                   ),
                 ],

@@ -1,3 +1,4 @@
+import 'package:helpables/Modal/app_colors.dart';
 import 'package:helpables/Providers/add_aid_requestprov.dart';
 import 'package:helpables/Providers/categories_providers.dart';
 import 'package:helpables/Screens/aidreqlist.dart';
@@ -82,6 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  //Color filterText = Color(0xFF00324C);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,27 +95,27 @@ class _HomeScreenState extends State<HomeScreen> {
         automaticallyImplyLeading: false,
         title: Container(
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.blueGrey),
+            border: Border.all(color: AppColors.TextsColor),
             borderRadius: BorderRadius.circular(25),
             color: Colors.white,
           ),
           padding: EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: [
-              Icon(Icons.search, color: Colors.indigo[900]),
+              Icon(Icons.search, color: AppColors.BordersColor),
               SizedBox(width: 8),
               Expanded(
                 child: TextField(
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: "Search By title or category",
-                    hintStyle: TextStyle(color: Colors.indigo[900]),
+                    hintStyle: TextStyle(color: AppColors.BordersColor),
                   ),
                   onChanged: _updateSearch,
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.menu, color: Colors.indigo[900]),
+                icon: Icon(Icons.menu, color: AppColors.BordersColor),
                 onPressed: () {
                   _scaffoldKey.currentState?.openDrawer();
                 },
@@ -160,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: Colors.white,
               child: Icon(
                 Icons.add,
-                color: Colors.blue[900],
+                color: AppColors.BordersColor,
               ),
               onPressed: () {
                 Provider.of<AddAidRequestProvider>(context, listen: false)
@@ -173,83 +176,89 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.1,
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ElevatedButton.icon(
-                  onPressed:
-                      (selectedCategory != null || selectedLocation != null)
-                          ? _clearFilters
-                          : _openFilterScreen,
-                  icon: Icon(
-                    (selectedCategory != null || selectedLocation != null)
-                        ? Icons.clear
-                        : Icons.filter_alt,
-                    color: Colors.white,
-                  ),
-                  label: Text('Filter', style: TextStyle(color: Colors.white)),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue[800],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16, top: 8, bottom: 8),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed:
+                          (selectedCategory != null || selectedLocation != null)
+                              ? _clearFilters
+                              : _openFilterScreen,
+                      icon: Icon(
+                        (selectedCategory != null || selectedLocation != null)
+                            ? Icons.clear
+                            : Icons.filter_alt,
+                        color: AppColors.TextsColor,
+                      ),
+                      label: Text('Filter',
+                          style: TextStyle(color: AppColors.TextsColor)),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            side: BorderSide(color: AppColors.BordersColor)),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      ),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  ),
+                    SizedBox(width: 8),
+                    if (selectedCategory != null)
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          setState(() {
+                            selectedCategory = null;
+                          });
+                        },
+                        icon: Icon(
+                          Icons.clear,
+                          color: AppColors.BordersColor,
+                        ),
+                        label: Text(selectedCategory!,
+                            style: TextStyle(color: AppColors.BordersColor)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.filterBackgroundColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        ),
+                      ),
+                    SizedBox(width: 8),
+                    if (selectedLocation != null)
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          setState(() {
+                            selectedLocation = null;
+                          });
+                        },
+                        icon: Icon(
+                          Icons.clear,
+                          color: AppColors.BordersColor,
+                        ),
+                        label: Text(selectedLocation!,
+                            style: TextStyle(color: AppColors.BordersColor)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.filterBackgroundColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        ),
+                      ),
+                  ],
                 ),
-                SizedBox(width: 8),
-                if (selectedCategory != null)
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      setState(() {
-                        selectedCategory = null;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.clear,
-                      color: Colors.white,
-                    ),
-                    label: Text(selectedCategory!,
-                        style: TextStyle(color: Colors.white)),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[800],
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    ),
-                  ),
-                SizedBox(width: 8),
-                if (selectedLocation != null)
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      setState(() {
-                        selectedLocation = null;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.clear,
-                      color: Colors.white,
-                    ),
-                    label: Text(selectedLocation!,
-                        style: TextStyle(color: Colors.white)),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue[800],
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    ),
-                  ),
-              ],
+              ),
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.76,
+            height: MediaQuery.of(context).size.height * 0.74,
             width: MediaQuery.of(context).size.width,
             child: _getScreenForIndex(_selectedIndex),
           ),
